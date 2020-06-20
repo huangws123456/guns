@@ -62,7 +62,7 @@ public class KSController extends BaseController {
     @RequestMapping("/index")
     public String index() {
         System.out.println("=============================================================");
-        return PREFIX + "ksIndex.html";
+        return PREFIX + "KSIndex.html";
     }
     /**
      * 跳转到设备管理首页

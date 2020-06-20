@@ -128,7 +128,7 @@ public class AccountController extends BaseController {
         }
         Account account = accountService.getById(id);
         LogObjectHolder.me().set(account);
-        return PREFIX + "/account_edit.html";
+        return PREFIX + "account_edit.html";
     }
     /**
      * 设备详情
