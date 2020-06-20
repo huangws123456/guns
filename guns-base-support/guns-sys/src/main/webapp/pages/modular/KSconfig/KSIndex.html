@@ -1,5 +1,26 @@
 @layout("/common/_container.html",{js:["/assets/modular/KSconfig/KSconfig.js"]}){
 <div class="layui-form" action="" style="margin: 10px;">
+    <div class="layui-form-item">
+        <div class="layui-col-md4" style="width: 20%;margin-left: 20%;">
+            <button class="layui-btn" id="tijiao" lay-submit lay-filter="formDemo">提交</button>
+        </div>
+        <div class="layui-col-md4" style="width: 20%">
+            <button class="layui-btn" id="stop" lay-submit lay-filter="formDemo1" onclick="stop()">停止</button>
+        </div>
+        <div class="layui-col-md4" style="width: 20%">
+            <span></span>
+        </div>
+        <div class="layui-col-md4" style="width: 20%">
+            <span></span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="width:30%">
+        <label class="layui-form-label">发送指令</label>
+        <div class="layui-input-block"  >
+            <select name="cmid" id="dictDetails" lay-verify="required" >
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item"style="width:70%">
         <label class="layui-form-label">分享链接</label>
         <div class="layui-input-block">
@@ -73,24 +94,14 @@
             <input type="text" name="approveNum"    placeholder="请输入点赞次数" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item" style="width:30%">
-        <label class="layui-form-label">发送指令</label>
-        <div class="layui-input-block"  >
-            <select name="cmid" id="dictDetails" lay-verify="required" >
-            </select>
-        </div>
-    </div>
+
    <!-- <div class="layui-form-item"style="width:90%;margin: 10px;">
     <label class="layui-form-label">消息</label>
     <div id="console" style="height:50px;overflow: auto;border:1px solid #ddd;">
         <div id="box"></div>
     </div>
     </div>-->
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" id="tijiao" lay-submit lay-filter="formDemo">提交</button>
-        </div>
-    </div>
+
 
 </div>
 <script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
@@ -135,6 +146,10 @@
         });
         $.ajaxSettings.async = true;
     }
+    function stop(){
+        alert('发送成功！');
+        send(998,'停止');
+    }
     function send(code,message){
         if(!window.WebSocket){
             return;
@@ -143,7 +158,7 @@
         params["from"]="web";
         params["cmid"]=code;
         params["deveice"]="";
-        params["message"]="";
+        params["message"]=message;
         params["apptype"]="1";
         params["timestamp"]=Date.parse(new Date());
         params["data"]=message;

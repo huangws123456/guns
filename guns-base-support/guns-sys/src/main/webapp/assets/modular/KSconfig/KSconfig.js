@@ -46,6 +46,25 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
         //添加 return false 可成功跳转页面
         //return false;
     });
+    form.on('submit(formDemo1)', function (data) {
+        var formData = data.field;
+        formData.cmid=="998";
+        var ajax = new $ax(Feng.ctxPath + "/KSconfig/submit", function (data) {
+            Feng.success("提交成功！");
+            //传给上个页面，刷新table用
+            // admin.putTempData('formOk', true);
+
+            //关掉对话框
+            //admin.closeThisDialog();
+            send(data.data.cmid,'',data.data);
+        }, function (data) {
+            Feng.error("添加失败！" + data.responseJSON.message)
+        });
+        ajax.set(data.field);
+        ajax.start();
+        //添加 return false 可成功跳转页面
+        //return false;
+    });
     $("#dictDetails").html('');
     var ajax = new $ax(Feng.ctxPath + "/dict/listDictsByCode", function (data) {
 
