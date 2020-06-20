@@ -40,7 +40,7 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
         AttributeKey<String> key = AttributeKey.valueOf("user");
         BaseNettyBean baseNettyBean =  (BaseNettyBean)map.get(ctx.channel().attr(key).get());
         if (baseNettyBean != null){
-            baseNettyBean.setDes("断开连接");
+            baseNettyBean.setDes("离线");
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
             map.put(baseNettyBean.getDeveice(),baseNettyBean);
@@ -78,6 +78,7 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
             //更新缓存
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
+            baseNettyBean.setDes("在线");
             map.put(baseNettyBean.getDeveice(),baseNettyBean);
             AttributeKey<String> key = AttributeKey.valueOf("user");
             channel.attr(key).set(baseNettyBean.getDeveice());
