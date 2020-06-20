@@ -17,7 +17,11 @@ spring:
     port: 587
     username: sn93@qq.com
     password: xxxpassword
-
+  redis:
+    host: 121.196.221.4
+    port: 9379
+    database: 8
+    password: 872093Rj
 # 邮件发送（改为自己的账号）
 mail:
   from: sn93@qq.com

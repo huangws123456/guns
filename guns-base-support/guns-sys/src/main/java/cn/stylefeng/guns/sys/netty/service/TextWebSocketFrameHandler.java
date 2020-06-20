@@ -52,7 +52,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         String s=msg.text();
-        System.out.println("EchoServer web接收到消息:" + s);
+        System.out.println("服务端接收到web消息:" + s);
         if(!s.contains("cmid")){
             return;
         }
@@ -77,7 +77,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
         String msg=EchoServer.gson.toJson(params);
 
-        System.out.println("EchoServer 发送消息:" + msg);
+        System.out.println("向web端回送消息:" + msg);
 
         try {
             if (channel != null && channel.isActive()) {

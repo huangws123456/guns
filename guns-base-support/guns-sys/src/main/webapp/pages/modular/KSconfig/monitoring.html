@@ -1,93 +1,33 @@
-@layout("/common/_container.html",{js:["/assets/modular/KSconfig/KSconfig.js"]}){
-<!--<div class="layui-form-item"style="width:90%;margin: 10px;;left:500px;">
-    <div class="layui-row layui-col-space10">
-        <div class="layui-col-md4">
-            <button type="button" style="width:20%;" class="layui-btn">按钮</button>
+@layout("/common/_container.html",{js:["/assets/modular/KSconfig/monitoring.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">实时监控</span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <input id="userName" class="layui-input" type="text" placeholder="设备编号"/>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-table" id="roleTable" lay-filter="roleTable"></table>
+                </div>
+            </div>
         </div>
-        <div class="layui-col-md4">
-            <button type="button" style="width:20%;" class="layui-btn">按钮</button>
-        </div>
-        <div class="layui-col-md4">
-            <button type="button" style="width:20%;"  class="layui-btn">按钮</button>
-        </div>
-        <div class="layui-col-md4">
-            <button type="button" style="width:20%;"  class="layui-btn">按钮</button>
-        </div>
-    </div>
-    </div>-->
-<div class="layui-form-item"style="width:90%;margin: 10px;">
-    <label class="layui-form-label">消息</label>
-    <div id="console" style="height:300px;overflow: auto;border:1px solid #ddd;">
-        <div id="socket_state"></div>
     </div>
 </div>
-<script src="${ctxPath}/assets/expand/plugins/jquery/jquery-3.2.1.min.js?v=${constants.getReleaseVersion()}"></script>
-<script src="${ctxPath}/assets/expand/plugins/ztree/jquery.ztree.all.min.js?v=${constants.getReleaseVersion()}"></script>
-<script type="text/javascript">
-    var socket;
-    connect();
-    function connect() {
-        if(window.WebSocket){
-            //socket连接格式不可修改 ws://ip:端口/websocket
-            if(!socket){
-            socket = new WebSocket("ws://localhost:8081/websocket");
-            }
-            socket.onmessage = function(event){
-                var received_msg = evt.data;
-                console(received_msg)
-                consoleLog(received_msg);
-            };
 
-            socket.onopen = function(event){
-                consoleLog("已连接");
-            };
-
-            socket.onclose = function(event){
-                consoleLog("已断开,重新连接...");
-                connect();
-            };
-        }else{
-            $('#socket_state').textbox("您的浏览器不支持WebSocket");
-        }
-    }
-
-    function send(code,message){
-        if(!window.WebSocket){
-            return;
-        }
-        var params=new Object();
-        params["from"]="h5";
-        params["cmid"]=code;
-        params["timestamp"]=Date.parse(new Date());
-        params["cmd"]=message;
-
-        var sendMsg=JSON.stringify(params);
-        if(socket.readyState == WebSocket.OPEN){
-            socket.send(sendMsg);
-        }else{
-            alert("连接断开");
-        }
-    }
-
-    function sendText(message){
-        if(!window.WebSocket){
-            return;
-        }
-        if(socket.readyState == WebSocket.OPEN){
-            socket.send(message);
-        }else{
-            alert("连接断开");
-        }
-    }
-    function consoleLog(msg){
-        var msg = $("<p></p>").text(msg);
-        var divHeight=$("#socket_state").height();
-        if(divHeight >= 2000){
-            $("#socket_state").html("");
-        }
-        $("#socket_state").append(msg);
-        var div = document.getElementById('console');
-        div.scrollTop = div.scrollHeight;
-    }
-</script>
+<!--<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>-->
 @}

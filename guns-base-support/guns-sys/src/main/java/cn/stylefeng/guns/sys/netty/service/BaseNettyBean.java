@@ -1,10 +1,13 @@
 package cn.stylefeng.guns.sys.netty.service;
 
+import java.util.Date;
+
 public class BaseNettyBean {
     private int cmid;
     private String deveice;
     private String des;
     private String cmd;
+    private String date;
 
     public String getCmd() {
         return cmd;
@@ -36,5 +39,13 @@ public class BaseNettyBean {
 
     public void setCmid(int cmid) {
         this.cmid = cmid;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

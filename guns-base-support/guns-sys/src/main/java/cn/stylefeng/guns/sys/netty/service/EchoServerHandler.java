@@ -1,18 +1,25 @@
 package cn.stylefeng.guns.sys.netty.service;
 
+import cn.stylefeng.guns.base.redis.RedisUtil;
 import com.google.gson.Gson;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
+import io.netty.util.AttributeKey;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
+    @Autowired
+    private RedisUtil redisUtils;
     private ChannelGroup channelGroup;
     private Gson gson;
+    private   final Map <String ,Object>  map = new HashMap<String ,Object>();
     public EchoServerHandler(ChannelGroup channelGroup){
         this.channelGroup=channelGroup;
         gson=new Gson();
@@ -30,11 +37,21 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
         System.out.println("EchoServer 有APP断开连接:" + ctx.channel().remoteAddress());
         super.channelInactive(ctx);
         channelGroup.remove(ctx.channel());
+        AttributeKey<String> key = AttributeKey.valueOf("user");
+        BaseNettyBean baseNettyBean =  (BaseNettyBean)map.get(ctx.channel().attr(key).get());
+        if (baseNettyBean != null){
+            baseNettyBean.setDes("断开连接");
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
+            map.put(baseNettyBean.getDeveice(),baseNettyBean);
+            redisUtils.set("statusInfo",map);
+        }
+
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
-        System.out.println("EchoServer 接收到消息:" + s);
+        System.out.println("服务端接收到app消息:" + s);
         if(!s.contains("\"cmid\"")){
             return;
         }
@@ -57,13 +74,22 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
             //回执包不进行转发
             sendMsg(channel,receiveMsg);
         }
+        if(baseNettyBean.getCmid()==995){
+            //更新缓存
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
+            map.put(baseNettyBean.getDeveice(),baseNettyBean);
+            AttributeKey<String> key = AttributeKey.valueOf("user");
+            channel.attr(key).set(baseNettyBean.getDeveice());
+            redisUtils.set("statusInfo",map);
+        }
 
     }
 
     //向单个socket发送消息
     public boolean sendMsg(Channel channel, String msg) {
 
-        System.out.println("EchoServer 发送消息:" + msg);
+        System.out.println("向特定web端发送消息:" + msg);
         try {
             if (channel != null && channel.isActive()) {
                 channel.writeAndFlush(Unpooled.copiedBuffer((msg + "\n").getBytes()));

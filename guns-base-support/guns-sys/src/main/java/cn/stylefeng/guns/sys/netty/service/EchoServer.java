@@ -84,7 +84,7 @@ public class EchoServer {
 
     //向所有tcp连接发送消息
     public static boolean sendAllMsg(String msg){
-        System.out.println("EchoServer 群发送消息:" + msg);
+        System.out.println("向app群发送消息:" + msg);
         try {
             if (channelGroup != null) {
                 channelGroup.writeAndFlush(Unpooled.copiedBuffer((msg + "\n").getBytes()));

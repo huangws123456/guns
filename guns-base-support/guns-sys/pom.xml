@@ -61,6 +61,11 @@
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>
+        <!--  加载 spring  boot  redis 包  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
