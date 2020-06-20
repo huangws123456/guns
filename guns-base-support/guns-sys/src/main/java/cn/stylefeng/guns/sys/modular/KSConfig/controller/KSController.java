@@ -24,6 +24,7 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +46,8 @@ public class KSController extends BaseController {
     @Autowired
     private RedisUtil redisUtils;
     private String PREFIX = "/modular/KSconfig/";
-
+    @Value("${spring.webSocket.url}")
+    private String webSocketUrl;
 
     /**
      * 跳转到设备管理首页
@@ -159,6 +161,18 @@ public class KSController extends BaseController {
         }
         redisUtils.set("statusInfo",map);*/
         return ResponseData.success(ksconfig);
+    }
+    /**
+     * 提交
+     *
+     * @author huangwuseng
+     * @Date 2020年6月8日20:27:22
+     */
+    @RequestMapping(value = "/getWebSocketUrl")
+    @ResponseBody
+    public ResponseData getWebSocketUrl()
+    {
+        return ResponseData.success(webSocketUrl);
     }
 
 }

@@ -43,13 +43,13 @@
             <input type="checkbox" name="ifRandom" lay-skin="switch" value="true">
         </div>
     </div>
-    <div class="layui-form-item" style="width:20%">
+    <div class="layui-form-item" style="width:70%">
         <label class="layui-form-label">评论间隔</label>
         <div class="layui-input-block">
             <input type="text" name="intervalTime"   placeholder="请输入评论间隔" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item" style="width:20%">
+    <div class="layui-form-item" style="width:70%">
         <label class="layui-form-label">评论次数</label>
         <div class="layui-input-block">
             <input type="text" name="commentNum"   placeholder="请输入评论次数" autocomplete="off" class="layui-input">
@@ -67,7 +67,7 @@
             <input type="checkbox" name="like" lay-skin="switch" value="true">
         </div>
     </div>
-    <div class="layui-form-item" style="width:20%">
+    <div class="layui-form-item" style="width:70%">
         <label class="layui-form-label">点赞次数</label>
         <div class="layui-input-block">
             <input type="text" name="approveNum"    placeholder="请输入点赞次数" autocomplete="off" class="layui-input">
@@ -97,12 +97,14 @@
 <script src="${ctxPath}/assets/expand/plugins/ztree/jquery.ztree.all.min.js?v=${constants.getReleaseVersion()}"></script>
 <script type="text/javascript">
     var socket;
+    var url;
+    getUrl();
     connect();
     function connect() {
         if(window.WebSocket){
             //socket连接格式不可修改 ws://ip:端口/websocket
             if(!socket || socket.readyState != WebSocket.OPEN){
-                socket = new WebSocket("ws://127.0.0.1:8081/websocket");
+                socket = new WebSocket(url);
             }
 
             socket.onmessage = function(event){
@@ -118,12 +120,20 @@
             socket.onclose = function(event){
                // alert("已断开,重新连接...");
                // consoleLog("已断开,重新连接...");
-                socket = new WebSocket("ws://127.0.0.1:8082/websocket");
+                socket = new WebSocket(url);
                 //connect();
             };
         }else{
             alert("您的浏览器不支持WebSocket");
         }
+    }
+    function getUrl(){
+        $.ajaxSettings.async = false;
+        $.post("/KSconfig/getWebSocketUrl", {}, function(data){
+            url= data.data;
+            console.log(data.data);
+        });
+        $.ajaxSettings.async = true;
     }
     function send(code,message){
         if(!window.WebSocket){

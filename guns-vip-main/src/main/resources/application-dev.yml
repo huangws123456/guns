@@ -22,6 +22,8 @@ spring:
     port: 9379
     database: 8
     password: 872093Rj
+  webSocket:
+    url: ws://120.55.42.0/:8081/websocket
 # 邮件发送（改为自己的账号）
 mail:
   from: sn93@qq.com

@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.sys.netty.service;
 
 import cn.stylefeng.guns.base.redis.RedisUtil;
+import cn.stylefeng.guns.base.redis.SpringUtil;
 import com.google.gson.Gson;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -15,11 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
-    @Autowired
-    private RedisUtil redisUtils;
+
+    private static  RedisUtil redisUtil ;
+    static {
+        redisUtil = SpringUtil.getBean(RedisUtil.class);
+    }
     private ChannelGroup channelGroup;
     private Gson gson;
-    private   final Map <String ,Object>  map = new HashMap<String ,Object>();
+    private   final static Map <String ,Object>  map = new HashMap<String ,Object>();
     public EchoServerHandler(ChannelGroup channelGroup){
         this.channelGroup=channelGroup;
         gson=new Gson();
@@ -44,17 +48,22 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
             map.put(baseNettyBean.getDeveice(),baseNettyBean);
-            redisUtils.set("statusInfo",map);
+            redisUtil.set("statusInfo",map);
         }
 
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
-        System.out.println("服务端接收到app消息:" + s);
+
         if(!s.contains("\"cmid\"")){
             return;
         }
+
+        if (s.contains("\"cmid\":100")) {
+            return;
+        }
+        System.out.println("服务端接收到app消息:" + s);
         receiveMsg(channelHandlerContext.channel(),s);
     }
 
@@ -82,7 +91,8 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
             map.put(baseNettyBean.getDeveice(),baseNettyBean);
             AttributeKey<String> key = AttributeKey.valueOf("user");
             channel.attr(key).set(baseNettyBean.getDeveice());
-            redisUtils.set("statusInfo",map);
+            System.out.println("baseNettyBean=======在线=========="+baseNettyBean.getDeveice());
+            redisUtil.set("statusInfo",map);
         }
 
     }
