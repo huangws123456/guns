@@ -145,7 +145,7 @@ public class KSController extends BaseController {
     @ResponseBody
     public ResponseData submit(@Valid KSconfig ksconfig)
     {
-       Map <String ,Object> map = (Map<String, Object>) redisUtils.get("statusInfo");
+      /* Map <String ,Object> map = (Map<String, Object>) redisUtils.get("statusInfo");
         if (map == null){
             map = new HashMap<String ,Object>();
         }
@@ -157,7 +157,7 @@ public class KSController extends BaseController {
         baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
         map.put("key"+i,baseNettyBean);
         }
-        redisUtils.set("statusInfo",map);
+        redisUtils.set("statusInfo",map);*/
         return ResponseData.success(ksconfig);
     }
 
