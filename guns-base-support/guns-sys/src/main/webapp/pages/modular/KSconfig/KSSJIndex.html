@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{js:["/assets/modular/KSconfig/KSconfig.js"]}){
+@layout("/common/_container.html",{js:["/assets/modular/KSconfig/KSSJconfig.js"]}){
 <div class="layui-form" action="" style="margin: 10px;">
     <div class="layui-form-item">
         <div class="layui-col-md4" style="width: 20%;margin-left: 20%;">
@@ -14,7 +14,7 @@
             <span></span>
         </div>
     </div>
-    <div class="layui-form-item" style="width:30%">
+    <!--<div class="layui-form-item" style="width:30%">
         <label class="layui-form-label">发送指令</label>
         <div class="layui-input-block"  >
             <select name="cmid" id="dictDetails" lay-verify="required" >
@@ -38,32 +38,31 @@
         <div class="layui-input-block">
             <input type="text" name="userName"    placeholder="请输入快手昵称" autocomplete="off" class="layui-input">
         </div>
+    </div>-->
+    <div class="layui-form-item" style="width:70%">
+        <label class="layui-form-label">滑动时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="sleepTime"    placeholder="请输入快滑动时间间隔单位s" autocomplete="off" class="layui-input">
+        </div>
     </div>
-<!--
     <div class="layui-form-item">
         <label class="layui-form-label">是否自动评论</label>
         <div class="layui-input-block">
             <input type="checkbox" name="isComment" lay-skin="switch" value="true">
         </div>
-    </div>-->
+    </div>
     <div class="layui-form-item layui-form-text" style="width:70%">
         <label class="layui-form-label">评论规则</label>
         <div class="layui-input-block">
             <textarea name="comment" placeholder="请输入规则例如：11#222#333 以#分隔" class="layui-textarea"></textarea>
         </div>
     </div>
-    <!--<div class="layui-form-item">
-        <label class="layui-form-label">是否顺序评论</label>
-        <div class="layui-input-block">
-            <input type="checkbox" name="order" lay-skin="switch" value="true">
-        </div>
-    </div>-->
-   <!-- <div class="layui-form-item">
-        <label class="layui-form-label">是否随机</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否随机评论</label>
         <div class="layui-input-block">
             <input type="checkbox" name="ifRandom" lay-skin="switch" value="true">
         </div>
-    </div>-->
+    </div>
     <div class="layui-form-item" style="width:70%">
         <label class="layui-form-label">评论间隔</label>
         <div class="layui-input-block">
@@ -76,18 +75,31 @@
             <input type="text" name="commentNum"   placeholder="请输入评论次数" autocomplete="off" class="layui-input">
         </div>
     </div>
-   <!-- <div class="layui-form-item">
+    <div class="layui-form-item">
         <label class="layui-form-label">是否自动关注</label>
         <div class="layui-input-block">
             <input type="checkbox" name="concern" lay-skin="switch" value="true">
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">是否随机关注</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="ifRandomGz" lay-skin="switch" value="true">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">是否自动点赞</label>
         <div class="layui-input-block">
             <input type="checkbox" name="like" lay-skin="switch" value="true">
         </div>
-    </div>-->
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否随机点赞</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="ifRandomDz" lay-skin="switch" value="true">
+        </div>
+    </div>
     <div class="layui-form-item" style="width:70%">
         <label class="layui-form-label">点赞次数</label>
         <div class="layui-input-block">

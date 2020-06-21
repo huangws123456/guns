@@ -50,6 +50,16 @@ public class KSController extends BaseController {
     private String webSocketUrl;
 
     /**
+     * 跳转到随机直播间首页
+     *
+     ** @author huangwuseng
+     *  * @Date 2020年6月8日20:27:22
+     */
+    @RequestMapping("/sjIndex")
+    public String sjIndex() {
+        return PREFIX + "KSSJIndex.html";
+    }
+    /**
      * 跳转到设备管理首页
      *
      ** @author huangwuseng
@@ -147,19 +157,6 @@ public class KSController extends BaseController {
     @ResponseBody
     public ResponseData submit(@Valid KSconfig ksconfig)
     {
-      /* Map <String ,Object> map = (Map<String, Object>) redisUtils.get("statusInfo");
-        if (map == null){
-            map = new HashMap<String ,Object>();
-        }
-        for (int i=15;i<18;i++){
-        BaseNettyBean baseNettyBean = new BaseNettyBean();
-        baseNettyBean.setDeveice("设备"+i);
-        baseNettyBean.setDes("连接成功");
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        baseNettyBean.setDate(dateformat.format(System.currentTimeMillis()));
-        map.put("key"+i,baseNettyBean);
-        }
-        redisUtils.set("statusInfo",map);*/
         return ResponseData.success(ksconfig);
     }
     /**

@@ -68,6 +68,19 @@ public class KSconfig  implements Serializable {
      * 设备号
      */
     private String deveice;
+    /**
+     * 是否随机关注
+     */
+    private String ifRandomGz;
+    /**
+     * 是否随机点赞
+     */
+    private String ifRandomDz;
+
+    /**
+     * 滑动时间间隔单位s
+     */
+    private String sleepTime;
 
     public String getSchemeUrl() {
         return schemeUrl;
@@ -195,5 +208,29 @@ public class KSconfig  implements Serializable {
 
     public void setDeveice(String deveice) {
         this.deveice = deveice;
+    }
+
+    public String getIfRandomGz() {
+        return ifRandomGz;
+    }
+
+    public void setIfRandomGz(String ifRandomGz) {
+        this.ifRandomGz = ifRandomGz;
+    }
+
+    public String getIfRandomDz() {
+        return ifRandomDz;
+    }
+
+    public void setIfRandomDz(String ifRandomDz) {
+        this.ifRandomDz = ifRandomDz;
+    }
+
+    public String getSleepTime() {
+        return sleepTime;
+    }
+
+    public void setSleepTime(String sleepTime) {
+        this.sleepTime = sleepTime;
     }
 }
